@@ -58,7 +58,7 @@ func main() {
 }
 ```
 
-Xem nhiều hơn các ví dụ tại [wiki](https://github.com/go-telegram-bot-api/telegram-bot-api/wiki)
+Xem nhiều hơn các ví dụ tại [wiki](https://github.com/nvhai245/kingtalk-bot-api/wiki)
 với nhiều thông tin chi tiết hơn vè cách sử dụng api, commands và các reply markup.
 
 Dưới đây là một ví dụ cho bot muốn sử dụng webhook của Google App Engine.
