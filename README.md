@@ -25,7 +25,7 @@ package main
 import (
 	"log"
 
-	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/nvhai245/kingtalk-bot-api"
 )
 
 func main() {
@@ -70,7 +70,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/nvhai245/kingtalk-bot-api"
 )
 
 func main() {
