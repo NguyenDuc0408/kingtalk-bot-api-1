@@ -14,6 +14,7 @@ Gia nhập [nhóm phát triển Telegram Bot Api](https://telegram.me/go_telegra
 ## Example
 
 Đầu tiên, đảm bảo library đã được cài đặt và cập nhận phiên bản mới nhất:
+
 `go get -u github.com/nvhai245/kingtalk-bot-api`.
 
 Ví dụ dưới đây là một bot đơn giản thực hiện lấy về các updates mới nhất rồi đăng chúng vào trong nhóm chat hiện tại:
