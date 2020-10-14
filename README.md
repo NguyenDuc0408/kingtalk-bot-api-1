@@ -29,7 +29,7 @@ import (
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI("Token_Của_Bot")
+	bot, err := ktbotapi.NewBotAPI("Token_Của_Bot")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -38,7 +38,7 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	u := tgbotapi.NewUpdate(0)
+	u := ktbotapi.NewUpdate(0)
 	u.Timeout = 60
 
 	updates, err := bot.GetUpdatesChan(u)
@@ -50,7 +50,7 @@ func main() {
 
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		msg := ktbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 		msg.ReplyToMessageID = update.Message.MessageID
 
 		bot.Send(msg)
@@ -74,7 +74,7 @@ import (
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI("Token_Của_Bot")
+	bot, err := ktbotapi.NewBotAPI("Token_Của_Bot")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	_, err = bot.SetWebhook(tgbotapi.NewWebhookWithCert("https://www.google.com:8443/"+bot.Token, "cert.pem"))
+	_, err = bot.SetWebhook(ktbotapi.NewWebhookWithCert("https://www.google.com:8443/"+bot.Token, "cert.pem"))
 	if err != nil {
 		log.Fatal(err)
 	}

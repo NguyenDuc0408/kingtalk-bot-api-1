@@ -1,4 +1,4 @@
-package tgbotapi
+package ktbotapi
 
 import (
 	"encoding/json"
@@ -9,11 +9,9 @@ import (
 
 // Telegram constants
 const (
-	// APIEndpoint is the endpoint for all API methods,
-	// with formatting for Sprintf.
-	APIEndpoint = "https://api.telegram.org/bot%s/%s"
-	// FileEndpoint is the endpoint for downloading a file from Telegram.
-	FileEndpoint = "https://api.telegram.org/file/bot%s/%s"
+	// *NOTE: This is testing endpoint, not official.
+	APIEndpoint  = "http://10.8.14.197:8080/bot%s/%s"
+	FileEndpoint = "http://10.8.14.197:8080/file/bot%s/%s"
 )
 
 // Constant values for ChatActions

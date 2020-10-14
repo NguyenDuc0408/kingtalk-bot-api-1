@@ -1,4 +1,4 @@
-package tgbotapi
+package ktbotapi
 
 // PassportRequestInfoConfig allows you to request passport info
 type PassportRequestInfoConfig struct {

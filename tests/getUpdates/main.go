@@ -20,13 +20,15 @@ func main() {
 	//if err != nil {
 	//	log.Fatal(err)
 	//}
-	info, err := bot.GetWebhookInfo()
+	updates, err := bot.GetUpdates(ktbotapi.UpdateConfig{
+		Offset:  0,
+		Limit:   5,
+		Timeout: 0,
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	if info.LastErrorDate != 0 {
-		log.Printf("Telegram callback failed: %s", info.LastErrorMessage)
-	}
+	_ = updates
 	//updates := bot.ListenForWebhook("/" + bot.Token)
 	//go http.ListenAndServeTLS("0.0.0.0:8443", "cert.pem", "key.pem", nil)
 	//

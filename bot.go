@@ -1,6 +1,6 @@
-// Package tgbotapi has functions and types used for interacting with
+// Package ktbotapi has functions and types used for interacting with
 // the Telegram Bot API.
-package tgbotapi
+package ktbotapi
 
 import (
 	"bytes"
@@ -80,6 +80,37 @@ func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse,
 	method := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
 
 	resp, err := bot.Client.PostForm(method, params)
+	if err != nil {
+		return APIResponse{}, err
+	}
+	defer resp.Body.Close()
+
+	var apiResp APIResponse
+	bytes, err := bot.decodeAPIResponse(resp.Body, &apiResp)
+	if err != nil {
+		return apiResp, err
+	}
+
+	if bot.Debug {
+		log.Printf("%s resp: %s", endpoint, bytes)
+	}
+
+	if !apiResp.Ok {
+		parameters := ResponseParameters{}
+		if apiResp.Parameters != nil {
+			parameters = *apiResp.Parameters
+		}
+		return apiResp, &Error{Code: apiResp.ErrorCode, Message: apiResp.Description, ResponseParameters: parameters}
+	}
+
+	return apiResp, nil
+}
+
+// MakeRequest makes a request to a specific endpoint with our token.
+func (bot *BotAPI) MakeGETRequest(endpoint string, params url.Values) (APIResponse, error) {
+	method := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
+
+	resp, err := bot.Client.Get(method)
 	if err != nil {
 		return APIResponse{}, err
 	}
@@ -259,7 +290,7 @@ func (bot *BotAPI) GetFileDirectURL(fileID string) (string, error) {
 // and so you may get this data from BotAPI.Self without the need for
 // another request.
 func (bot *BotAPI) GetMe() (User, error) {
-	resp, err := bot.MakeRequest("getMe", nil)
+	resp, err := bot.MakeGETRequest("getMe", nil)
 	if err != nil {
 		return User{}, err
 	}
@@ -276,7 +307,7 @@ func (bot *BotAPI) GetMe() (User, error) {
 //
 // It requires the Message.
 func (bot *BotAPI) IsMessageToMe(message Message) bool {
-	return strings.Contains(message.Text, "@"+bot.Self.UserName)
+	return strings.Contains(message.Text, "@"+*bot.Self.UserName)
 }
 
 // Send will send a Chattable item to Telegram.
@@ -431,7 +462,7 @@ func (bot *BotAPI) GetUpdates(config UpdateConfig) ([]Update, error) {
 		v.Add("timeout", strconv.Itoa(config.Timeout))
 	}
 
-	resp, err := bot.MakeRequest("getUpdates", v)
+	resp, err := bot.MakeGETRequest("getUpdates", v)
 	if err != nil {
 		return []Update{}, err
 	}
@@ -484,7 +515,7 @@ func (bot *BotAPI) SetWebhook(config WebhookConfig) (APIResponse, error) {
 // GetWebhookInfo allows you to fetch information about a webhook and if
 // one currently is set, along with pending update count and error messages.
 func (bot *BotAPI) GetWebhookInfo() (WebhookInfo, error) {
-	resp, err := bot.MakeRequest("getWebhookInfo", url.Values{})
+	resp, err := bot.MakeGETRequest("getWebhookInfo", url.Values{})
 	if err != nil {
 		return WebhookInfo{}, err
 	}

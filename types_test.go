@@ -1,42 +1,44 @@
-package tgbotapi_test
+package ktbotapi_test
 
 import (
-	tgbotapi "github.com/nvhai245/kingtalk-bot-api"
+	ktbotapi "github.com/nvhai245/kingtalk-bot-api"
 	"testing"
 	"time"
 )
 
 func TestUserStringWith(t *testing.T) {
-	user := tgbotapi.User{
+	var username = ""
+	user := ktbotapi.User{
 		ID:           0,
 		FirstName:    "Test",
 		LastName:     "Test",
-		UserName:     "",
+		UserName:     &username,
 		LanguageCode: "en",
 		IsBot:        false,
 	}
-
-	if user.String() != "Test Test" {
+	var userString = "Test Test"
+	if user.String() != &userString {
 		t.Fail()
 	}
 }
 
 func TestUserStringWithUserName(t *testing.T) {
-	user := tgbotapi.User{
+	var username = "@test"
+	user := ktbotapi.User{
 		ID:           0,
 		FirstName:    "Test",
 		LastName:     "Test",
-		UserName:     "@test",
+		UserName:     &username,
 		LanguageCode: "en",
 	}
 
-	if user.String() != "@test" {
+	if user.String() != &username {
 		t.Fail()
 	}
 }
 
 func TestMessageTime(t *testing.T) {
-	message := tgbotapi.Message{Date: 0}
+	message := ktbotapi.Message{Date: 0}
 
 	date := time.Unix(0, 0)
 	if message.Time() != date {
@@ -45,8 +47,8 @@ func TestMessageTime(t *testing.T) {
 }
 
 func TestMessageIsCommandWithCommand(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command"}
-	message.Entities = &[]tgbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
+	message := ktbotapi.Message{Text: "/command"}
+	message.Entities = &[]ktbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
 
 	if message.IsCommand() != true {
 		t.Fail()
@@ -54,7 +56,7 @@ func TestMessageIsCommandWithCommand(t *testing.T) {
 }
 
 func TestIsCommandWithText(t *testing.T) {
-	message := tgbotapi.Message{Text: "some text"}
+	message := ktbotapi.Message{Text: "some text"}
 
 	if message.IsCommand() != false {
 		t.Fail()
@@ -62,7 +64,7 @@ func TestIsCommandWithText(t *testing.T) {
 }
 
 func TestIsCommandWithEmptyText(t *testing.T) {
-	message := tgbotapi.Message{Text: ""}
+	message := ktbotapi.Message{Text: ""}
 
 	if message.IsCommand() != false {
 		t.Fail()
@@ -70,8 +72,8 @@ func TestIsCommandWithEmptyText(t *testing.T) {
 }
 
 func TestCommandWithCommand(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command"}
-	message.Entities = &[]tgbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
+	message := ktbotapi.Message{Text: "/command"}
+	message.Entities = &[]ktbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
 
 	if message.Command() != "command" {
 		t.Fail()
@@ -79,7 +81,7 @@ func TestCommandWithCommand(t *testing.T) {
 }
 
 func TestCommandWithEmptyText(t *testing.T) {
-	message := tgbotapi.Message{Text: ""}
+	message := ktbotapi.Message{Text: ""}
 
 	if message.Command() != "" {
 		t.Fail()
@@ -87,7 +89,7 @@ func TestCommandWithEmptyText(t *testing.T) {
 }
 
 func TestCommandWithNonCommand(t *testing.T) {
-	message := tgbotapi.Message{Text: "test text"}
+	message := ktbotapi.Message{Text: "test text"}
 
 	if message.Command() != "" {
 		t.Fail()
@@ -95,8 +97,8 @@ func TestCommandWithNonCommand(t *testing.T) {
 }
 
 func TestCommandWithBotName(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command@testbot"}
-	message.Entities = &[]tgbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 16}}
+	message := ktbotapi.Message{Text: "/command@testbot"}
+	message.Entities = &[]ktbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 16}}
 
 	if message.Command() != "command" {
 		t.Fail()
@@ -104,8 +106,8 @@ func TestCommandWithBotName(t *testing.T) {
 }
 
 func TestCommandWithAtWithBotName(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command@testbot"}
-	message.Entities = &[]tgbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 16}}
+	message := ktbotapi.Message{Text: "/command@testbot"}
+	message.Entities = &[]ktbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 16}}
 
 	if message.CommandWithAt() != "command@testbot" {
 		t.Fail()
@@ -113,37 +115,37 @@ func TestCommandWithAtWithBotName(t *testing.T) {
 }
 
 func TestMessageCommandArgumentsWithArguments(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command with arguments"}
-	message.Entities = &[]tgbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
+	message := ktbotapi.Message{Text: "/command with arguments"}
+	message.Entities = &[]ktbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
 	if message.CommandArguments() != "with arguments" {
 		t.Fail()
 	}
 }
 
 func TestMessageCommandArgumentsWithMalformedArguments(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command-without argument space"}
-	message.Entities = &[]tgbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
+	message := ktbotapi.Message{Text: "/command-without argument space"}
+	message.Entities = &[]ktbotapi.MessageEntity{{Type: "bot_command", Offset: 0, Length: 8}}
 	if message.CommandArguments() != "without argument space" {
 		t.Fail()
 	}
 }
 
 func TestMessageCommandArgumentsWithoutArguments(t *testing.T) {
-	message := tgbotapi.Message{Text: "/command"}
+	message := ktbotapi.Message{Text: "/command"}
 	if message.CommandArguments() != "" {
 		t.Fail()
 	}
 }
 
 func TestMessageCommandArgumentsForNonCommand(t *testing.T) {
-	message := tgbotapi.Message{Text: "test text"}
+	message := ktbotapi.Message{Text: "test text"}
 	if message.CommandArguments() != "" {
 		t.Fail()
 	}
 }
 
 func TestMessageEntityParseURLGood(t *testing.T) {
-	entity := tgbotapi.MessageEntity{URL: "https://www.google.com"}
+	entity := ktbotapi.MessageEntity{URL: "https://www.google.com"}
 
 	if _, err := entity.ParseURL(); err != nil {
 		t.Fail()
@@ -151,7 +153,7 @@ func TestMessageEntityParseURLGood(t *testing.T) {
 }
 
 func TestMessageEntityParseURLBad(t *testing.T) {
-	entity := tgbotapi.MessageEntity{URL: ""}
+	entity := ktbotapi.MessageEntity{URL: ""}
 
 	if _, err := entity.ParseURL(); err == nil {
 		t.Fail()
@@ -159,7 +161,7 @@ func TestMessageEntityParseURLBad(t *testing.T) {
 }
 
 func TestChatIsPrivate(t *testing.T) {
-	chat := tgbotapi.Chat{ID: 10, Type: "private"}
+	chat := ktbotapi.Chat{ID: 10, Type: "private"}
 
 	if chat.IsPrivate() != true {
 		t.Fail()
@@ -167,7 +169,7 @@ func TestChatIsPrivate(t *testing.T) {
 }
 
 func TestChatIsGroup(t *testing.T) {
-	chat := tgbotapi.Chat{ID: 10, Type: "group"}
+	chat := ktbotapi.Chat{ID: 10, Type: "group"}
 
 	if chat.IsGroup() != true {
 		t.Fail()
@@ -175,7 +177,7 @@ func TestChatIsGroup(t *testing.T) {
 }
 
 func TestChatIsChannel(t *testing.T) {
-	chat := tgbotapi.Chat{ID: 10, Type: "channel"}
+	chat := ktbotapi.Chat{ID: 10, Type: "channel"}
 
 	if chat.IsChannel() != true {
 		t.Fail()
@@ -183,7 +185,7 @@ func TestChatIsChannel(t *testing.T) {
 }
 
 func TestChatIsSuperGroup(t *testing.T) {
-	chat := tgbotapi.Chat{ID: 10, Type: "supergroup"}
+	chat := ktbotapi.Chat{ID: 10, Type: "supergroup"}
 
 	if !chat.IsSuperGroup() {
 		t.Fail()
@@ -191,7 +193,7 @@ func TestChatIsSuperGroup(t *testing.T) {
 }
 
 func TestMessageEntityIsMention(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "mention"}
+	entity := ktbotapi.MessageEntity{Type: "mention"}
 
 	if !entity.IsMention() {
 		t.Fail()
@@ -199,7 +201,7 @@ func TestMessageEntityIsMention(t *testing.T) {
 }
 
 func TestMessageEntityIsHashtag(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "hashtag"}
+	entity := ktbotapi.MessageEntity{Type: "hashtag"}
 
 	if !entity.IsHashtag() {
 		t.Fail()
@@ -207,7 +209,7 @@ func TestMessageEntityIsHashtag(t *testing.T) {
 }
 
 func TestMessageEntityIsBotCommand(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "bot_command"}
+	entity := ktbotapi.MessageEntity{Type: "bot_command"}
 
 	if !entity.IsCommand() {
 		t.Fail()
@@ -215,7 +217,7 @@ func TestMessageEntityIsBotCommand(t *testing.T) {
 }
 
 func TestMessageEntityIsUrl(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "url"}
+	entity := ktbotapi.MessageEntity{Type: "url"}
 
 	if !entity.IsUrl() {
 		t.Fail()
@@ -223,7 +225,7 @@ func TestMessageEntityIsUrl(t *testing.T) {
 }
 
 func TestMessageEntityIsEmail(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "email"}
+	entity := ktbotapi.MessageEntity{Type: "email"}
 
 	if !entity.IsEmail() {
 		t.Fail()
@@ -231,7 +233,7 @@ func TestMessageEntityIsEmail(t *testing.T) {
 }
 
 func TestMessageEntityIsBold(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "bold"}
+	entity := ktbotapi.MessageEntity{Type: "bold"}
 
 	if !entity.IsBold() {
 		t.Fail()
@@ -239,7 +241,7 @@ func TestMessageEntityIsBold(t *testing.T) {
 }
 
 func TestMessageEntityIsItalic(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "italic"}
+	entity := ktbotapi.MessageEntity{Type: "italic"}
 
 	if !entity.IsItalic() {
 		t.Fail()
@@ -247,7 +249,7 @@ func TestMessageEntityIsItalic(t *testing.T) {
 }
 
 func TestMessageEntityIsCode(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "code"}
+	entity := ktbotapi.MessageEntity{Type: "code"}
 
 	if !entity.IsCode() {
 		t.Fail()
@@ -255,7 +257,7 @@ func TestMessageEntityIsCode(t *testing.T) {
 }
 
 func TestMessageEntityIsPre(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "pre"}
+	entity := ktbotapi.MessageEntity{Type: "pre"}
 
 	if !entity.IsPre() {
 		t.Fail()
@@ -263,7 +265,7 @@ func TestMessageEntityIsPre(t *testing.T) {
 }
 
 func TestMessageEntityIsTextLink(t *testing.T) {
-	entity := tgbotapi.MessageEntity{Type: "text_link"}
+	entity := ktbotapi.MessageEntity{Type: "text_link"}
 
 	if !entity.IsTextLink() {
 		t.Fail()
@@ -271,7 +273,7 @@ func TestMessageEntityIsTextLink(t *testing.T) {
 }
 
 func TestFileLink(t *testing.T) {
-	file := tgbotapi.File{FilePath: "test/test.txt"}
+	file := ktbotapi.File{FilePath: "test/test.txt"}
 
 	if file.Link("token") != "https://api.telegram.org/file/bottoken/test/test.txt" {
 		t.Fail()

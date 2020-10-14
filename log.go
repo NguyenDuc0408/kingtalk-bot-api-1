@@ -1,4 +1,4 @@
-package tgbotapi
+package ktbotapi
 
 import (
 	"errors"
