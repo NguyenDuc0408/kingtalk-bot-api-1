@@ -1,9 +1,9 @@
 # Bindings bằng ngôn ngữ Go cho Bot API của KingTalk
 
-[![GoDoc](https://godoc.org/github.com/go-telegram-bot-api/telegram-bot-api?status.svg)](http://godoc.org/github.com/go-telegram-bot-api/telegram-bot-api)
+[![GoDoc](https://godoc.org/github.com/nvhai245/kingtalk-bot-api?status.svg)](http://godoc.org/github.com/nvhai245/kingtalk-bot-api)
 [![Travis](https://travis-ci.org/go-telegram-bot-api/telegram-bot-api.svg)](https://travis-ci.org/go-telegram-bot-api/telegram-bot-api)
 
-Các method được dựa trên library telegram-bot-api dành cho telegram. Mọi thông tin khác về thư viện có thể được tìm thấy ở [godoc](http://godoc.org/github.com/go-telegram-bot-api/telegram-bot-api) này.
+Các method được dựa trên library telegram-bot-api dành cho telegram. Mọi thông tin khác về thư viện có thể được tìm thấy ở [godoc](http://godoc.org/github.com/nvhai245/kingtalk-bot-api) này.
 
 Mục đích của thư viện này là tạo ra một wrapper xung quanh Bot API của KingTalk mà không bổ sung thêm bất cứ tính năng nào. Hiện nay có 
 nhiều thư viện khác cũng cung cấp các tính năng giúp tùy biến plugins và xử lý commands cho Bot API, có thể được
