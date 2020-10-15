@@ -61,7 +61,7 @@ func TestGetUpdates(t *testing.T) {
 func TestSendWithMessage(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewMessage(ChatID, "A test message from the test library in telegram-bot-api")
+	msg := ktbotapi.NewMessage(ChatID, "A test message from the test library in kingtalk-bot-api")
 	msg.ParseMode = "markdown"
 	_, err := bot.Send(msg)
 
@@ -74,7 +74,7 @@ func TestSendWithMessage(t *testing.T) {
 func TestSendWithMessageReply(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewMessage(ChatID, "A test message from the test library in telegram-bot-api")
+	msg := ktbotapi.NewMessage(ChatID, "A test message from the test library in kingtalk-bot-api")
 	msg.ReplyToMessageID = ReplyToMessageID
 	_, err := bot.Send(msg)
 
@@ -99,7 +99,7 @@ func TestSendWithMessageForward(t *testing.T) {
 func TestSendWithNewPhoto(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewPhotoUpload(ChatID, "tests/image.jpg")
+	msg := ktbotapi.NewPhotoUpload(ChatID, "examples/image.jpg")
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
 
@@ -112,7 +112,7 @@ func TestSendWithNewPhoto(t *testing.T) {
 func TestSendWithNewPhotoWithFileBytes(t *testing.T) {
 	bot, _ := getBot(t)
 
-	data, _ := ioutil.ReadFile("tests/image.jpg")
+	data, _ := ioutil.ReadFile("examples/image.jpg")
 	b := ktbotapi.FileBytes{Name: "image.jpg", Bytes: data}
 
 	msg := ktbotapi.NewPhotoUpload(ChatID, b)
@@ -128,7 +128,7 @@ func TestSendWithNewPhotoWithFileBytes(t *testing.T) {
 func TestSendWithNewPhotoWithFileReader(t *testing.T) {
 	bot, _ := getBot(t)
 
-	f, _ := os.Open("tests/image.jpg")
+	f, _ := os.Open("examples/image.jpg")
 	reader := ktbotapi.FileReader{Name: "image.jpg", Reader: f, Size: -1}
 
 	msg := ktbotapi.NewPhotoUpload(ChatID, reader)
@@ -144,7 +144,7 @@ func TestSendWithNewPhotoWithFileReader(t *testing.T) {
 func TestSendWithNewPhotoReply(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewPhotoUpload(ChatID, "tests/image.jpg")
+	msg := ktbotapi.NewPhotoUpload(ChatID, "examples/image.jpg")
 	msg.ReplyToMessageID = ReplyToMessageID
 
 	_, err := bot.Send(msg)
@@ -171,7 +171,7 @@ func TestSendWithExistingPhoto(t *testing.T) {
 func TestSendWithNewDocument(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewDocumentUpload(ChatID, "tests/image.jpg")
+	msg := ktbotapi.NewDocumentUpload(ChatID, "examples/image.jpg")
 	_, err := bot.Send(msg)
 
 	if err != nil {
@@ -195,7 +195,7 @@ func TestSendWithExistingDocument(t *testing.T) {
 func TestSendWithNewAudio(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewAudioUpload(ChatID, "tests/audio.mp3")
+	msg := ktbotapi.NewAudioUpload(ChatID, "examples/audio.mp3")
 	msg.Title = "TEST"
 	msg.Duration = 10
 	msg.Performer = "TEST"
@@ -228,7 +228,7 @@ func TestSendWithExistingAudio(t *testing.T) {
 func TestSendWithNewVoice(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewVoiceUpload(ChatID, "tests/voice.ogg")
+	msg := ktbotapi.NewVoiceUpload(ChatID, "examples/voice.ogg")
 	msg.Duration = 10
 	_, err := bot.Send(msg)
 
@@ -287,7 +287,7 @@ func TestSendWithVenue(t *testing.T) {
 func TestSendWithNewVideo(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewVideoUpload(ChatID, "tests/video.mp4")
+	msg := ktbotapi.NewVideoUpload(ChatID, "examples/video.mp4")
 	msg.Duration = 10
 	msg.Caption = "TEST"
 
@@ -317,7 +317,7 @@ func TestSendWithExistingVideo(t *testing.T) {
 func TestSendWithNewVideoNote(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewVideoNoteUpload(ChatID, 240, "tests/videonote.mp4")
+	msg := ktbotapi.NewVideoNoteUpload(ChatID, 240, "examples/videonote.mp4")
 	msg.Duration = 10
 
 	_, err := bot.Send(msg)
@@ -345,7 +345,7 @@ func TestSendWithExistingVideoNote(t *testing.T) {
 func TestSendWithNewSticker(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewStickerUpload(ChatID, "tests/image.jpg")
+	msg := ktbotapi.NewStickerUpload(ChatID, "examples/image.jpg")
 
 	_, err := bot.Send(msg)
 
@@ -371,7 +371,7 @@ func TestSendWithExistingSticker(t *testing.T) {
 func TestSendWithNewStickerAndKeyboardHide(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewStickerUpload(ChatID, "tests/image.jpg")
+	msg := ktbotapi.NewStickerUpload(ChatID, "examples/image.jpg")
 	msg.ReplyMarkup = ktbotapi.ReplyKeyboardRemove{
 		RemoveKeyboard: true,
 		Selective:      false,
@@ -466,7 +466,7 @@ func TestSetWebhookWithCert(t *testing.T) {
 
 	bot.RemoveWebhook()
 
-	wh := ktbotapi.NewWebhookWithCert("https://example.com/ktbotapi-test/"+bot.Token, "tests/cert.pem")
+	wh := ktbotapi.NewWebhookWithCert("https://example.com/ktbotapi-test/"+bot.Token, "examples/cert.pem")
 	_, err := bot.SetWebhook(wh)
 	if err != nil {
 		t.Error(err)
@@ -648,7 +648,7 @@ func TestDeleteMessage(t *testing.T) {
 func TestPinChatMessage(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewMessage(SupergroupChatID, "A test message from the test library in telegram-bot-api")
+	msg := ktbotapi.NewMessage(SupergroupChatID, "A test message from the test library in kingtalk-bot-api")
 	msg.ParseMode = "markdown"
 	message, _ := bot.Send(msg)
 
@@ -668,7 +668,7 @@ func TestPinChatMessage(t *testing.T) {
 func TestUnpinChatMessage(t *testing.T) {
 	bot, _ := getBot(t)
 
-	msg := ktbotapi.NewMessage(SupergroupChatID, "A test message from the test library in telegram-bot-api")
+	msg := ktbotapi.NewMessage(SupergroupChatID, "A test message from the test library in kingtalk-bot-api")
 	msg.ParseMode = "markdown"
 	message, _ := bot.Send(msg)
 

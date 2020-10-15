@@ -36,7 +36,8 @@ type BotAPI struct {
 //
 // It requires a token, provided by @BotFather on Telegram.
 func NewBotAPI(token string) (*BotAPI, error) {
-	return NewBotAPIWithClient(token, APIEndpoint, &http.Client{})
+	botApi, err := NewBotAPIWithClient(token, APIEndpoint, &http.Client{})
+	return botApi, err
 }
 
 // NewBotAPIWithAPIEndpoint creates a new BotAPI instance
@@ -79,7 +80,13 @@ func (b *BotAPI) SetAPIEndpoint(apiEndpoint string) {
 func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse, error) {
 	method := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
 
-	resp, err := bot.Client.PostForm(method, params)
+	r, _ := http.NewRequest(http.MethodPost, method, strings.NewReader(params.Encode())) // URL-encoded payload
+	r.Header.Add("AppKey", "y6XGovgLoS1YtgLA8pDAEq1aXhmgoLIlKwwoe7PSAMlIx085prvSWKpthyPjCDTRFAjORdWyYdPcqLRrVfjAYBT845KkzhR3f2msOyBRahDFCvn8SF272har")
+	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Add("AccessHash", "f056a441fbfd34cc760233467d964c77")
+
+	resp, err := bot.Client.Do(r)
+
 	if err != nil {
 		return APIResponse{}, err
 	}
@@ -108,9 +115,14 @@ func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse,
 
 // MakeRequest makes a request to a specific endpoint with our token.
 func (bot *BotAPI) MakeGETRequest(endpoint string, params url.Values) (APIResponse, error) {
-	method := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
+	urlString := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
+	req, err := http.NewRequest("GET", urlString, nil)
+	if err != nil {
+		log.Println(err)
+	}
+	req.URL.RawQuery = params.Encode()
 
-	resp, err := bot.Client.Get(method)
+	resp, err := bot.Client.Get(req.URL.String())
 	if err != nil {
 		return APIResponse{}, err
 	}
@@ -241,6 +253,8 @@ func (bot *BotAPI) UploadFile(endpoint string, params map[string]string, fieldna
 	}
 
 	ms.SetupRequest(req)
+	req.Header.Add("AppKey", "y6XGovgLoS1YtgLA8pDAEq1aXhmgoLIlKwwoe7PSAMlIx085prvSWKpthyPjCDTRFAjORdWyYdPcqLRrVfjAYBT845KkzhR3f2msOyBRahDFCvn8SF272har")
+	req.Header.Add("AccessHash", "f056a441fbfd34cc760233467d964c77")
 
 	res, err := bot.Client.Do(req)
 	if err != nil {
