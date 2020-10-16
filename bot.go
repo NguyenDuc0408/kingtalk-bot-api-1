@@ -81,9 +81,7 @@ func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse,
 	method := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
 
 	r, _ := http.NewRequest(http.MethodPost, method, strings.NewReader(params.Encode())) // URL-encoded payload
-	r.Header.Add("AppKey", "y6XGovgLoS1YtgLA8pDAEq1aXhmgoLIlKwwoe7PSAMlIx085prvSWKpthyPjCDTRFAjORdWyYdPcqLRrVfjAYBT845KkzhR3f2msOyBRahDFCvn8SF272har")
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	r.Header.Add("AccessHash", "f056a441fbfd34cc760233467d964c77")
 
 	resp, err := bot.Client.Do(r)
 
@@ -253,8 +251,6 @@ func (bot *BotAPI) UploadFile(endpoint string, params map[string]string, fieldna
 	}
 
 	ms.SetupRequest(req)
-	req.Header.Add("AppKey", "y6XGovgLoS1YtgLA8pDAEq1aXhmgoLIlKwwoe7PSAMlIx085prvSWKpthyPjCDTRFAjORdWyYdPcqLRrVfjAYBT845KkzhR3f2msOyBRahDFCvn8SF272har")
-	req.Header.Add("AccessHash", "f056a441fbfd34cc760233467d964c77")
 
 	res, err := bot.Client.Do(req)
 	if err != nil {
