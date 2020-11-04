@@ -18,7 +18,7 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	chatMessage := ktbotapi.NewMessage(testChatId, "sent by ktbotapi")
+	chatMessage := ktbotapi.NewMessage(testChatId, "sent by ktbotapi 3")
 	message, err := bot.Send(chatMessage)
 	if err != nil {
 		log.Fatal(err)

@@ -10,8 +10,8 @@ import (
 // Telegram constants
 const (
 	// *NOTE: This is testing endpoint, not official.
-	APIEndpoint  = "http://10.8.14.197:8080/bot%s/%s"
-	FileEndpoint = "http://10.8.14.197:8080/file/bot%s/%s"
+	APIEndpoint  = "http://103.109.41.25:8080/bot%s/%s"
+	FileEndpoint = "http://103.109.41.25:8080/file/bot%s/%s"
 )
 
 // Constant values for ChatActions
