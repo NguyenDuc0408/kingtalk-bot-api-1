@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-var testChatId int64 = 3337601907588356
+var testChatId int64 = 7455805529554338
 
 func main() {
 	bot, err := ktbotapi.NewBotAPI(os.Getenv("KINGTALK_BOT_TOKEN"))
@@ -18,7 +18,7 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	chatMessage := ktbotapi.NewMessage(testChatId, "sent by ktbotapi 3")
+	chatMessage := ktbotapi.NewMessage(testChatId, "sent by ktbotapi :)")
 	message, err := bot.Send(chatMessage)
 	if err != nil {
 		log.Fatal(err)
