@@ -13,14 +13,26 @@ func main() {
 	}
 
 	bot.Debug = true
-
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	info, err := bot.GetWebhookInfo()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if info.LastErrorDate != 0 {
-		log.Printf("Telegram callback failed: %s", info.LastErrorMessage)
+	u := ktbotapi.NewUpdate(0)
+	u.Timeout = 30
+	updates, err := bot.GetUpdatesChan(u)
+
+	for update := range updates {
+		if update.Message == nil {
+			continue
+		}
+
+		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+		msg := ktbotapi.NewMessage(update.Message.Chat.ID, "Hi")
+		//msg.ReplyToMessageID = update.Message.MessageID
+		btn := ktbotapi.KeyboardButton{
+			RequestLocation: true,
+			Text:            "Gimme where u live!!",
+		}
+		msg.ReplyMarkup = ktbotapi.NewReplyKeyboard([]ktbotapi.KeyboardButton{btn})
+		bot.Send(msg)
 	}
 }

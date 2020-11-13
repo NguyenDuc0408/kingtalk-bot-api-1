@@ -13,16 +13,26 @@ func main() {
 	}
 
 	bot.Debug = true
-
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	updates, err := bot.GetUpdates(ktbotapi.UpdateConfig{
-		Offset:  0,
-		Limit:   5,
-		Timeout: 5,
-	})
-	if err != nil {
-		log.Fatal(err)
+	u := ktbotapi.NewUpdate(0)
+	u.Timeout = 60
+	updates, err := bot.GetUpdatesChan(u)
+
+	for update := range updates {
+		if update.Message == nil {
+			continue
+		}
+
+		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+		msg := ktbotapi.NewMessage(update.Message.Chat.ID, "Tại sao tôi phải trả lời bạn?")
+		//msg.ReplyToMessageID = update.Message.MessageID
+		btn := ktbotapi.KeyboardButton{
+			RequestLocation: true,
+			Text:            "Gimme where u live!!",
+		}
+		msg.ReplyMarkup = ktbotapi.NewReplyKeyboard([]ktbotapi.KeyboardButton{btn})
+		bot.Send(msg)
 	}
-	_ = updates
 }
