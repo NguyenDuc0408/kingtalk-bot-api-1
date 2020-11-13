@@ -18,6 +18,7 @@ func main() {
 	u := ktbotapi.NewUpdate(0)
 	u.Timeout = 60
 	updates, err := bot.GetUpdatesChan(u)
+	log.Println("Listening to bot updates...")
 
 	for update := range updates {
 		if update.Message == nil {
@@ -28,11 +29,17 @@ func main() {
 
 		msg := ktbotapi.NewMessage(update.Message.Chat.ID, "Tại sao tôi phải trả lời bạn?")
 		//msg.ReplyToMessageID = update.Message.MessageID
-		btn := ktbotapi.KeyboardButton{
-			RequestLocation: true,
-			Text:            "Gimme where u live!!",
-		}
-		msg.ReplyMarkup = ktbotapi.NewReplyKeyboard([]ktbotapi.KeyboardButton{btn})
+		//btn := ktbotapi.KeyboardButton{
+		//	RequestLocation: true,
+		//	Text:            "Gimme where u live!!",
+		//}
+		url := "https://www.instagram.com"
+		msg.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
+			{ktbotapi.InlineKeyboardButton{
+				Text: "Tôi không biết",
+				URL:  &url,
+			}},
+		}}
 		bot.Send(msg)
 	}
 }
