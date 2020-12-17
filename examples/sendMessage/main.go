@@ -15,7 +15,7 @@ func main() {
 
 	bot.Debug = true
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.FirstName)
 
 	var entities []ktbotapi.MessageEntity
 	entities = append(entities, ktbotapi.MessageEntity{

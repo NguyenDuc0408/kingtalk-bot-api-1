@@ -1281,3 +1281,19 @@ func (config GetStickerSetConfig) values() (url.Values, error) {
 	v.Add("name", config.Name)
 	return v, nil
 }
+
+// UserMenuConfig contains information for UserMenu
+type UserMenuConfig struct {
+	Menu UserMenu
+}
+
+func (config UserMenuConfig) method() string {
+	return "setUserMenu"
+}
+
+func (config UserMenuConfig) values() (url.Values, error) {
+	v := url.Values{}
+	menu, _ := json.Marshal(config.Menu)
+	v.Add("user_menu", string(menu))
+	return v, nil
+}

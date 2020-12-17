@@ -1043,3 +1043,15 @@ func (bot *BotAPI) GetStickerSet(config GetStickerSetConfig) (StickerSet, error)
 	}
 	return stickerSet, nil
 }
+
+// SetUserMenu set an user's menu
+func (bot *BotAPI) SetUserMenu(config UserMenuConfig) (APIResponse, error) {
+	v, _ := config.values()
+	bot.debugLog(config.method(), v, nil)
+	return bot.MakeRequest(config.method(), v)
+}
+
+// DeleteUserMenu delete an user's menu
+func (bot *BotAPI) DeleteUserMenu() (APIResponse, error) {
+	return bot.MakeRequest("deleteUserMenu", url.Values{})
+}

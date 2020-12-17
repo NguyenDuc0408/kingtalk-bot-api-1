@@ -697,8 +697,8 @@ func NewKeyboardButtonLocation(text string) KeyboardButton {
 }
 
 // NewKeyboardButtonRow creates a row of keyboard buttons.
-func NewKeyboardButtonRow(buttons ...KeyboardButton) []KeyboardButton {
-	var row []KeyboardButton
+func NewKeyboardButtonRow(buttons ...*KeyboardButton) []*KeyboardButton {
+	var row []*KeyboardButton
 
 	row = append(row, buttons...)
 
@@ -745,8 +745,8 @@ func NewInlineKeyboardButtonSwitch(text, sw string) InlineKeyboardButton {
 }
 
 // NewInlineKeyboardRow creates an inline keyboard row with buttons.
-func NewInlineKeyboardRow(buttons ...InlineKeyboardButton) []InlineKeyboardButton {
-	var row []InlineKeyboardButton
+func NewInlineKeyboardRow(buttons ...*InlineKeyboardButton) []*InlineKeyboardButton {
+	var row []*InlineKeyboardButton
 
 	row = append(row, buttons...)
 

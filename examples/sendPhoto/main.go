@@ -18,7 +18,7 @@ func main() {
 
 	bot.Debug = true
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.FirstName)
 	absPath, err := filepath.Abs("../image.jpg")
 	if err != nil {
 	}
