@@ -744,6 +744,15 @@ func NewInlineKeyboardButtonSwitch(text, sw string) InlineKeyboardButton {
 	}
 }
 
+// NewInlineKeyboardButtonPay creates an inline keyboard button with
+// pay functionality.
+func NewInlineKeyboardButtonPay(text string) InlineKeyboardButton {
+	return InlineKeyboardButton{
+		Text: text,
+		Pay:  true,
+	}
+}
+
 // NewInlineKeyboardRow creates an inline keyboard row with buttons.
 func NewInlineKeyboardRow(buttons ...*InlineKeyboardButton) []*InlineKeyboardButton {
 	var row []*InlineKeyboardButton
