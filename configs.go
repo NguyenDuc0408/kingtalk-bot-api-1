@@ -1320,3 +1320,12 @@ func (config UserMenuConfig) values() (url.Values, error) {
 	v.Add("user_menu", string(menu))
 	return v, nil
 }
+
+// BotCommandConfig contains information for BotCommand
+type BotCommandConfig struct {
+	BotCommand
+}
+
+func (config BotCommandConfig) method() string {
+	return "setMyCommand"
+}

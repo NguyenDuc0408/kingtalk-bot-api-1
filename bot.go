@@ -1055,3 +1055,17 @@ func (bot *BotAPI) SetUserMenu(config UserMenuConfig) (APIResponse, error) {
 func (bot *BotAPI) DeleteUserMenu() (APIResponse, error) {
 	return bot.MakeRequest("deleteUserMenu", url.Values{})
 }
+
+// SetCommand sets a bot's list of commands.
+func (bot *BotAPI) SetCommands(commands []BotCommand) (APIResponse, error) {
+	v := url.Values{}
+	c, _ := json.Marshal(commands)
+	v.Add("commands", string(c))
+	return bot.MakeRequest("setMyCommands", v)
+}
+
+// GetCommand get all bot's commands.
+func (bot *BotAPI) GetCommands() (APIResponse, error) {
+	v := url.Values{}
+	return bot.MakeGETRequest("getMyCommands", v)
+}

@@ -836,9 +836,8 @@ func NewSetChatPhotoShare(chatID int64, fileID string) SetChatPhotoConfig {
 	}
 }
 
-// NewMessage creates a new Message.
-//
-// chatID is where to send it, text is the message text.
+// NewProduct creates a new Product.
+// Requires both productID and eshopToken.
 func NewProduct(chatID int64, productID int64, eshopToken string) ProductConfig {
 	return ProductConfig{
 		BaseChat: BaseChat{
@@ -847,5 +846,13 @@ func NewProduct(chatID int64, productID int64, eshopToken string) ProductConfig 
 		},
 		ProductID:  productID,
 		EshopToken: eshopToken,
+	}
+}
+
+// NewBotCommand creates a new BotCommand
+func NewBotCommand(command, description string) BotCommand {
+	return BotCommand{
+		Command:     command,
+		Description: description,
 	}
 }
