@@ -835,3 +835,17 @@ func NewSetChatPhotoShare(chatID int64, fileID string) SetChatPhotoConfig {
 		},
 	}
 }
+
+// NewMessage creates a new Message.
+//
+// chatID is where to send it, text is the message text.
+func NewProduct(chatID int64, productID int64, eshopToken string) ProductConfig {
+	return ProductConfig{
+		BaseChat: BaseChat{
+			ChatID:           chatID,
+			ReplyToMessageID: 0,
+		},
+		ProductID:  productID,
+		EshopToken: eshopToken,
+	}
+}

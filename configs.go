@@ -215,9 +215,32 @@ func (config MessageConfig) values() (url.Values, error) {
 	return v, nil
 }
 
-// method returns Telegram API method name for sending Message.
+// method returns KingTalk Bot API method name for sending Message.
 func (config MessageConfig) method() string {
 	return "sendMessage"
+}
+
+// ProductConfig contains information about a sendProduct request.
+type ProductConfig struct {
+	BaseChat
+	ProductID  int64
+	EshopToken string
+}
+
+// values returns a url.Values representation of ProductConfig.
+func (config ProductConfig) values() (url.Values, error) {
+	v, err := config.BaseChat.values()
+	if err != nil {
+		return v, err
+	}
+	v.Add("product_id", strconv.Itoa(int(config.ProductID)))
+	v.Add("eshop_token", config.EshopToken)
+	return v, nil
+}
+
+// method returns KingTalk Bot API method name for sending Product.
+func (config ProductConfig) method() string {
+	return "sendProduct"
 }
 
 // ForwardConfig contains information about a ForwardMessage request.
