@@ -1,58 +1,100 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	ktbotapi "github.com/nvhai245/kingtalk-bot-api"
+	"github.com/nvhai245/kingtalk-bot-api"
 	"log"
-	"net/http"
+	"os"
 )
 
-// This handler is called everytime telegram sends us a webhook event
-func Handler(res http.ResponseWriter, req *http.Request) {
-	// First, decode the JSON response body
-	body := &ktbotapi.Update{}
-	if err := json.NewDecoder(req.Body).Decode(body); err != nil {
-		fmt.Println("could not decode request body", err)
-		return
-	}
-
-	// Nếu user gửi tin nhắn cho bot
-	if body.Message != nil {
-		chatId := body.Message.Chat.ID
-		log.Println("chatId: ", chatId)
-		if err := taiSaoToiPhaiTraLoiBan(chatId); err != nil {
-			fmt.Println("error in sending reply:", err)
-			return
-		}
-		// log a confirmation message if the message is sent successfully
-		fmt.Println("reply sent")
-	}
-}
-
-//The below code deals with the process of sending a response message
-// to the user
-
-// taiSaoToiPhaiTraLoiBan takes a chatID and sends "Tại sao tôi phải trả lời bạn?" to them
-func taiSaoToiPhaiTraLoiBan(chatID int64) error {
-	chatMessage := ktbotapi.NewMessage(chatID, "Tại sao tôi phải trả lời bạn?")
-	message, err := bot.Send(chatMessage)
-	if err != nil {
-		return err
-	}
-	log.Printf("%+v", message)
-	return nil
-}
-
-var bot, err = ktbotapi.NewBotAPI("1735940:93M5fKuPedrQ45PiosUTvl0Z0h5lTrCaw6tYRA9a")
-
-// FInally, the main funtion starts our server on port 8080
 func main() {
+	bot, err := ktbotapi.NewBotAPI(os.Getenv("KINGTALK_BOT_TOKEN"))
 	if err != nil {
 		log.Fatal(err)
 	}
-	bot.Debug = true
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
-	http.ListenAndServe(":3000", http.HandlerFunc(Handler))
+	bot.Debug = true
+	log.Printf("Authorized on account %s", bot.Self.FirstName)
+
+	u := ktbotapi.NewUpdate(0)
+	u.Timeout = 60
+	updates, err := bot.GetUpdatesChan(u)
+	log.Println("Listening to bot updates...")
+
+	for update := range updates {
+		if update.Message == nil {
+			if update.InlineQuery == nil {
+				continue
+			}
+			var results []interface{}
+			result := ktbotapi.InlineQueryResultPhoto{
+				Type:        "photo",
+				ID:          "testIDForCustomBotHandler",
+				URL:         "https://images-cdn.9gag.com/photo/aq1WXGP_700b.jpg",
+				MimeType:    "image/jpg",
+				Title:       "yo",
+				Description: "",
+				Caption:     "yo",
+			}
+			results = append(results, result)
+			inline := ktbotapi.InlineConfig{
+				InlineQueryID: update.InlineQuery.ID,
+				Results:       results,
+			}
+			bot.AnswerInlineQuery(inline)
+		} else if !update.Message.IsCommand() {
+
+			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+			msg := ktbotapi.NewMessage(update.Message.Chat.ID, "Tại sao tôi phải trả lời bạn?")
+			url := "https://www.instagram.com"
+			msg.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
+				{ktbotapi.InlineKeyboardButton{
+					Text: "Tôi không biết",
+					URL:  &url,
+				}},
+			}}
+			bot.Send(msg)
+		} else {
+			var msg ktbotapi.MessageConfig
+			switch update.Message.Command() {
+			case "allinlinebuttons":
+				msg = ktbotapi.NewMessage(update.Message.Chat.ID, "Các loại inline buttons: ")
+				url := "https://www.google.com"
+
+				bt1 := ktbotapi.NewInlineKeyboardButtonURL("Button url", url)
+				bt2 := ktbotapi.NewInlineKeyboardButtonSwitch("Button switch", "@hainv_bot")
+				bt3 := ktbotapi.NewInlineKeyboardButtonData("Button Data", "ThisIsData")
+				bt4 := ktbotapi.NewInlineKeyboardButtonPay("Button Pay")
+
+				msg.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
+					{
+						bt1,
+						bt2,
+						bt3,
+						bt4,
+					},
+				}}
+			case "allreplybuttons":
+				msg = ktbotapi.NewMessage(update.Message.Chat.ID, "Các loại reply buttons: ")
+				bt5 := ktbotapi.NewKeyboardButton("Button text")
+				bt6 := ktbotapi.NewKeyboardButtonContact("Request contact")
+				bt7 := ktbotapi.NewKeyboardButtonLocation("Request location")
+				msg.ReplyMarkup = ktbotapi.ReplyKeyboardMarkup{
+					Keyboard: [][]ktbotapi.KeyboardButton{
+						{
+							bt5,
+							bt6,
+							bt7,
+						},
+					},
+					ResizeKeyboard:  false, // optional
+					OneTimeKeyboard: false, // optional
+					Selective:       false, // optional
+				}
+			default:
+				msg.Text = "I don't know that command"
+			}
+			bot.Send(msg)
+		}
+	}
 }
