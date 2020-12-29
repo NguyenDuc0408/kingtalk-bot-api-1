@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-// Telegram constants
+// KingTalk constants
 const (
 	// *NOTE: This is testing endpoint, not official.
 	APIEndpoint  = "http://103.109.41.25:8080/bot%s/%s"
@@ -262,7 +262,7 @@ func (config ForwardConfig) values() (url.Values, error) {
 	return v, nil
 }
 
-// method returns Telegram API method name for sending Forward.
+// method returns KingTalk Bot API method name for sending Forward.
 func (config ForwardConfig) method() string {
 	return "forwardMessage"
 }
@@ -311,9 +311,45 @@ func (config PhotoConfig) name() string {
 	return "photo"
 }
 
-// method returns Telegram API method name for sending Photo.
+// method returns KingTalk Bot API method name for sending Photo.
 func (config PhotoConfig) method() string {
 	return "sendPhoto"
+}
+
+// PhotoUrlConfig contains information about a SendPhoto request using a photo url.
+type PhotoUrlConfig struct {
+	BaseChat
+	Caption   string
+	ParseMode string
+	Url       string
+}
+
+// name returns the field name for the Photo.
+func (config PhotoUrlConfig) name() string {
+	return "photo"
+}
+
+// method returns KingTalk Bot API method name for sending Photo.
+func (config PhotoUrlConfig) method() string {
+	return "sendPhoto"
+}
+
+// Values returns a url.Values representation of PhotoUrlConfig.
+func (config PhotoUrlConfig) values() (url.Values, error) {
+	v, err := config.BaseChat.values()
+	if err != nil {
+		return v, err
+	}
+
+	v.Add(config.name(), config.Url)
+	if config.Caption != "" {
+		v.Add("caption", config.Caption)
+		if config.ParseMode != "" {
+			v.Add("parse_mode", config.ParseMode)
+		}
+	}
+
+	return v, nil
 }
 
 // AudioConfig contains information about a SendAudio request.
@@ -383,7 +419,7 @@ func (config AudioConfig) name() string {
 	return "audio"
 }
 
-// method returns Telegram API method name for sending Audio.
+// method returns KingTalk Bot API method name for sending Audio.
 func (config AudioConfig) method() string {
 	return "sendAudio"
 }
@@ -432,7 +468,7 @@ func (config DocumentConfig) name() string {
 	return "document"
 }
 
-// method returns Telegram API method name for sending Document.
+// method returns KingTalk Bot API method name for sending Document.
 func (config DocumentConfig) method() string {
 	return "sendDocument"
 }
@@ -466,7 +502,7 @@ func (config StickerConfig) name() string {
 	return "sticker"
 }
 
-// method returns Telegram API method name for sending Sticker.
+// method returns KingTalk Bot API method name for sending Sticker.
 func (config StickerConfig) method() string {
 	return "sendSticker"
 }
@@ -519,7 +555,7 @@ func (config VideoConfig) name() string {
 	return "video"
 }
 
-// method returns Telegram API method name for sending Video.
+// method returns KingTalk Bot API method name for sending Video.
 func (config VideoConfig) method() string {
 	return "sendVideo"
 }
@@ -572,7 +608,7 @@ func (config AnimationConfig) name() string {
 	return "animation"
 }
 
-// method returns Telegram API method name for sending Animation.
+// method returns KingTalk Bot API method name for sending Animation.
 func (config AnimationConfig) method() string {
 	return "sendAnimation"
 }
@@ -596,7 +632,7 @@ func (config VideoNoteConfig) values() (url.Values, error) {
 		v.Add("duration", strconv.Itoa(config.Duration))
 	}
 
-	// Telegram API seems to have a bug, if no length is provided or it is 0, it will send an error response
+	// KingTalk Bot API seems to have a bug, if no length is provided or it is 0, it will send an error response
 	if config.Length != 0 {
 		v.Add("length", strconv.Itoa(config.Length))
 	}
@@ -623,7 +659,7 @@ func (config VideoNoteConfig) name() string {
 	return "video_note"
 }
 
-// method returns Telegram API method name for sending VideoNote.
+// method returns KingTalk Bot API method name for sending VideoNote.
 func (config VideoNoteConfig) method() string {
 	return "sendVideoNote"
 }
@@ -679,7 +715,7 @@ func (config VoiceConfig) name() string {
 	return "voice"
 }
 
-// method returns Telegram API method name for sending Voice.
+// method returns KingTalk Bot API method name for sending Voice.
 func (config VoiceConfig) method() string {
 	return "sendVoice"
 }
@@ -730,7 +766,7 @@ func (config LocationConfig) values() (url.Values, error) {
 	return v, nil
 }
 
-// method returns Telegram API method name for sending Location.
+// method returns KingTalk Bot API method name for sending Location.
 func (config LocationConfig) method() string {
 	return "sendLocation"
 }
@@ -895,7 +931,7 @@ func (config ChatActionConfig) values() (url.Values, error) {
 	return v, nil
 }
 
-// method returns Telegram API method name for sending ChatAction.
+// method returns KingTalk Bot API method name for sending ChatAction.
 func (config ChatActionConfig) method() string {
 	return "sendChatAction"
 }
@@ -969,7 +1005,7 @@ type UserProfilePhotosConfig struct {
 	Limit  int
 }
 
-// FileConfig has information about a file hosted on Telegram.
+// FileConfig has information about a file hosted on KingTalk
 type FileConfig struct {
 	FileID string
 }
@@ -1268,7 +1304,7 @@ func (config SetChatPhotoConfig) name() string {
 	return "photo"
 }
 
-// method returns Telegram API method name for sending Photo.
+// method returns KingTalk Bot API method name for sending Photo.
 func (config SetChatPhotoConfig) method() string {
 	return "setChatPhoto"
 }

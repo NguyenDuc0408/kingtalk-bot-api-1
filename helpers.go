@@ -856,3 +856,17 @@ func NewBotCommand(command, description string) BotCommand {
 		Description: description,
 	}
 }
+
+//NewPhotoWithUrl creates a new photo by url.
+//
+//chatID is where to send it
+//
+//Note that you must send animated GIFs as a document.
+func NewPhotoWithUrl(chatID int64, src string) PhotoUrlConfig {
+	return PhotoUrlConfig{
+		BaseChat: BaseChat{
+			ChatID: chatID,
+		},
+		Url: src,
+	}
+}
