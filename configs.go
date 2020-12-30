@@ -118,6 +118,7 @@ func (file BaseFile) params() (map[string]string, error) {
 	} else {
 		params["chat_id"] = strconv.FormatInt(file.ChatID, 10)
 	}
+	params["peer_id"] = strconv.Itoa(int(file.PeerID))
 
 	if file.ReplyToMessageID != 0 {
 		params["reply_to_message_id"] = strconv.Itoa(file.ReplyToMessageID)
