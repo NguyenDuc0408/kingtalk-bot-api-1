@@ -5,10 +5,10 @@ import (
 	"log"
 )
 
-var testChatId int64 = 3337584726760808
+var testPeerID int32 = 1736098
 
 func main() {
-	bot, err := ktbotapi.NewBotAPI("777576:CCFB1cLCeOeGRdkTLm2uFUtTpLG9vU8QFYGTi2PX")
+	bot, err := ktbotapi.NewBotAPI("332000:YHE508a4V8HL8yKjlHwchA6RXYEjLpIIXExUzwaH")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,7 +28,7 @@ func main() {
 
 	msg := ktbotapi.MessageConfig{
 		BaseChat: ktbotapi.BaseChat{
-			ChatID:              testChatId,
+			PeerID:              testPeerID,
 			ChannelUsername:     "",
 			ReplyToMessageID:    0,
 			ReplyMarkup:         nil,

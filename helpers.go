@@ -58,10 +58,10 @@ func NewForward(chatID int64, fromChatID int64, messageID int) ForwardConfig {
 // FileReader, or FileBytes.
 //
 // Note that you must send animated GIFs as a document.
-func NewPhotoUpload(chatID int64, file interface{}) PhotoConfig {
+func NewPhotoUpload(chatID int64, peerID int32, file interface{}) PhotoConfig {
 	return PhotoConfig{
 		BaseFile: BaseFile{
-			BaseChat:    BaseChat{ChatID: chatID},
+			BaseChat:    BaseChat{ChatID: chatID, PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -862,10 +862,11 @@ func NewBotCommand(command, description string) BotCommand {
 //chatID is where to send it
 //
 //Note that you must send animated GIFs as a document.
-func NewPhotoWithUrl(chatID int64, src string) PhotoUrlConfig {
+func NewPhotoWithUrl(chatID int64, peerID int32, src string) PhotoUrlConfig {
 	return PhotoUrlConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
+			PeerID: peerID,
 		},
 		Url: src,
 	}

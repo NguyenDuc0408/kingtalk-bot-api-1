@@ -4,14 +4,14 @@ import (
 	"github.com/nvhai245/kingtalk-bot-api"
 	"io/ioutil"
 	"log"
-	"os"
 	"path/filepath"
 )
 
 var testChatId int64 = 7455805529554338
+var testPeerID int32 = 1736098
 
 func main() {
-	bot, err := ktbotapi.NewBotAPI(os.Getenv("KINGTALK_BOT_TOKEN"))
+	bot, err := ktbotapi.NewBotAPI("332000:YHE508a4V8HL8yKjlHwchA6RXYEjLpIIXExUzwaH")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -22,10 +22,10 @@ func main() {
 
 	absPath, err := filepath.Abs("../image.jpg")
 	if err != nil {
+		log.Println(err)
 	}
-	log.Println(err)
 	file, err := ioutil.ReadFile(absPath)
-	chatMessage := ktbotapi.NewPhotoUpload(testChatId, ktbotapi.FileBytes{
+	chatMessage := ktbotapi.NewPhotoUpload(testChatId, testPeerID, ktbotapi.FileBytes{
 		Name:  "image.jpg",
 		Bytes: file,
 	})

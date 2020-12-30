@@ -63,6 +63,7 @@ type Fileable interface {
 // BaseChat is base type for all chat config types.
 type BaseChat struct {
 	ChatID              int64 // required
+	PeerID              int32 // required if chat_id is missing
 	ChannelUsername     string
 	ReplyToMessageID    int
 	ReplyMarkup         interface{}
@@ -74,6 +75,8 @@ func (chat *BaseChat) values() (url.Values, error) {
 	v := url.Values{}
 	if chat.ChannelUsername != "" {
 		v.Add("chat_id", chat.ChannelUsername)
+	} else if chat.PeerID != 0 {
+		v.Add("peer_id", strconv.Itoa(int(chat.PeerID)))
 	} else {
 		v.Add("chat_id", strconv.FormatInt(chat.ChatID, 10))
 	}
