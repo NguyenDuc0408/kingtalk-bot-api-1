@@ -58,10 +58,27 @@ func NewForward(chatID int64, fromChatID int64, messageID int) ForwardConfig {
 // FileReader, or FileBytes.
 //
 // Note that you must send animated GIFs as a document.
-func NewPhotoUpload(chatID int64, peerID int32, file interface{}) PhotoConfig {
+func NewPhotoUpload(chatID int64, file interface{}) PhotoConfig {
 	return PhotoConfig{
 		BaseFile: BaseFile{
-			BaseChat:    BaseChat{ChatID: chatID, PeerID: peerID},
+			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
+// NewPhotoUploadWithPeer creates a new photo uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// Note that you must send animated GIFs as a document.
+// This method only work for bots with privileges.
+func NewPhotoUploadWithPeer(peerID int32, file interface{}) PhotoConfig {
+	return PhotoConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -77,6 +94,22 @@ func NewPhotoShare(chatID int64, fileID string) PhotoConfig {
 	return PhotoConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
+// NewPhotoShareWithPeer shares an existing photo to an user.
+// You may use this to reshare an existing photo without reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the file
+// already uploaded.
+// This method only work for bots with privileges.
+func NewPhotoShareWithPeer(peerID int32, fileID string) PhotoConfig {
+	return PhotoConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			FileID:      fileID,
 			UseExisting: true,
 		},
@@ -849,6 +882,47 @@ func NewProduct(chatID int64, productID int64, eshopToken string) ProductConfig 
 	}
 }
 
+// NewProductWithPeer creates a new Product.
+// Requires both productID and eshopToken.
+//
+// This method only available for bots with privileges.
+func NewProductWithPeer(peerID int32, productID int64, eshopToken string) ProductConfig {
+	return ProductConfig{
+		BaseChat: BaseChat{
+			PeerID:           peerID,
+			ReplyToMessageID: 0,
+		},
+		ProductID:  productID,
+		EshopToken: eshopToken,
+	}
+}
+
+// NewProductCart creates a new ProductCart.
+// Requires a token.
+func NewProductCart(chatID int64, cartToken string) ProductCartConfig {
+	return ProductCartConfig{
+		BaseChat: BaseChat{
+			ChatID:           chatID,
+			ReplyToMessageID: 0,
+		},
+		CartToken: cartToken,
+	}
+}
+
+// NewProductCartWithPeer creates a new ProductCart.
+// Requires a token.
+//
+// This method only available for bots with privileges.
+func NewProductCartWithPeer(peerID int32, cartToken string) ProductCartConfig {
+	return ProductCartConfig{
+		BaseChat: BaseChat{
+			PeerID:           peerID,
+			ReplyToMessageID: 0,
+		},
+		CartToken: cartToken,
+	}
+}
+
 // NewBotCommand creates a new BotCommand
 func NewBotCommand(command, description string) BotCommand {
 	return BotCommand{
@@ -857,15 +931,29 @@ func NewBotCommand(command, description string) BotCommand {
 	}
 }
 
-//NewPhotoWithUrl creates a new photo by url.
+// NewPhotoWithUrl creates a new photo by url.
 //
-//chatID is where to send it
+// chatID is where to send it
 //
-//Note that you must send animated GIFs as a document.
-func NewPhotoWithUrl(chatID int64, peerID int32, src string) PhotoUrlConfig {
+// Note that you must send animated GIFs as a document.
+func NewPhotoUrl(chatID int64, src string) PhotoUrlConfig {
 	return PhotoUrlConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
+		},
+		Url: src,
+	}
+}
+
+// NewPhotoUrlWithPeer creates a new photo by url.
+//
+// peerID is the id of the user to send it to.
+//
+// Note that you must send animated GIFs as a document.
+// This method only work for bots with privileges.
+func NewPhotoUrlWithPeer(peerID int32, src string) PhotoUrlConfig {
+	return PhotoUrlConfig{
+		BaseChat: BaseChat{
 			PeerID: peerID,
 		},
 		Url: src,
