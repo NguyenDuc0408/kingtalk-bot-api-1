@@ -51,13 +51,15 @@ func (ch UpdatesChannel) Clear() {
 
 // User is a user on KingTalk
 type User struct {
-	ID           int       `json:"id"`
-	FirstName    string    `json:"first_name"`
-	LastName     string    `json:"last_name,omitempty"`     // optional
-	UserName     *string   `json:"username,omitempty"`      // optional
-	LanguageCode string    `json:"language_code,omitempty"` // optional
-	IsBot        bool      `json:"is_bot,omitempty"`        // optional
-	UserMenu     *UserMenu `json:"user_menu,omitempty"`     // optional
+	ID            int               `json:"id"`
+	FirstName     string            `json:"first_name"`
+	LastName      string            `json:"last_name,omitempty"`     // optional
+	UserName      *string           `json:"username,omitempty"`      // optional
+	LanguageCode  string            `json:"language_code,omitempty"` // optional
+	IsBot         bool              `json:"is_bot,omitempty"`        // optional
+	UserMenu      *UserMenu         `json:"user_menu,omitempty"`     // optional
+	VivaID        string            `json:"viva_id,omitempty"`       // optional
+	ProfilePhotos UserProfilePhotos `json:"profile_photos"`          // optional
 }
 
 // UserMenu is menu of an user (not available for bots)
