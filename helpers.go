@@ -18,6 +18,22 @@ func NewMessage(chatID int64, text string) MessageConfig {
 	}
 }
 
+// NewMessage creates a new Message.
+//
+// peerID is the id of the user to send it to, text is the message text.
+//
+// This method only available for bots with privileges.
+func NewMessageWithPeer(peerID int32, text string) MessageConfig {
+	return MessageConfig{
+		BaseChat: BaseChat{
+			PeerID:           peerID,
+			ReplyToMessageID: 0,
+		},
+		Text:                  text,
+		DisableWebPagePreview: false,
+	}
+}
+
 // NewDeleteMessage creates a request to delete a message.
 func NewDeleteMessage(chatID int64, messageID int) DeleteMessageConfig {
 	return DeleteMessageConfig{
@@ -130,6 +146,22 @@ func NewAudioUpload(chatID int64, file interface{}) AudioConfig {
 	}
 }
 
+// NewAudioUploadWithPeer creates a new audio uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewAudioUploadWithPeer(peerID int32, file interface{}) AudioConfig {
+	return AudioConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
 // NewAudioShare shares an existing audio file.
 // You may use this to reshare an existing audio file without
 // reuploading it.
@@ -146,6 +178,24 @@ func NewAudioShare(chatID int64, fileID string) AudioConfig {
 	}
 }
 
+// NewAudioShareWithPeer shares an existing audio file.
+// You may use this to reshare an existing audio file without
+// reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the audio
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewAudioShareWithPeer(peerID int32, fileID string) AudioConfig {
+	return AudioConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
 // NewDocumentUpload creates a new document uploader.
 //
 // chatID is where to send it, file is a string path to the file,
@@ -154,6 +204,22 @@ func NewDocumentUpload(chatID int64, file interface{}) DocumentConfig {
 	return DocumentConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
+// NewDocumentUploadWithPeer creates a new document uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewDocumentUploadWithPeer(peerID int32, file interface{}) DocumentConfig {
+	return DocumentConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -176,6 +242,24 @@ func NewDocumentShare(chatID int64, fileID string) DocumentConfig {
 	}
 }
 
+// NewDocumentShareWithPeer shares an existing document.
+// You may use this to reshare an existing document without
+// reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the document
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewDocumentShareWithPeer(peerID int32, fileID string) DocumentConfig {
+	return DocumentConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
 // NewStickerUpload creates a new sticker uploader.
 //
 // chatID is where to send it, file is a string path to the file,
@@ -184,6 +268,22 @@ func NewStickerUpload(chatID int64, file interface{}) StickerConfig {
 	return StickerConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
+// NewStickerUploadWithPeer creates a new sticker uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewStickerUploadWithPeer(peerID int32, file interface{}) StickerConfig {
+	return StickerConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -206,14 +306,48 @@ func NewStickerShare(chatID int64, fileID string) StickerConfig {
 	}
 }
 
+// NewStickerShareWithPeer shares an existing sticker.
+// You may use this to reshare an existing sticker without
+// reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the sticker
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewStickerShareWithPeer(peerID int32, fileID string) StickerConfig {
+	return StickerConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
 // NewVideoUpload creates a new video uploader.
 //
-// chatID is where to send it, file is a string path to the file,
+// peerID is the id of the user to send it to, file is a string path to the file,
 // FileReader, or FileBytes.
 func NewVideoUpload(chatID int64, file interface{}) VideoConfig {
 	return VideoConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
+// NewVideoUploadWithPeer creates a new video uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewVideoUploadWithPeer(peerID int32, file interface{}) VideoConfig {
+	return VideoConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -235,6 +369,23 @@ func NewVideoShare(chatID int64, fileID string) VideoConfig {
 	}
 }
 
+// NewVideoShareWithPeer shares an existing video.
+// You may use this to reshare an existing video without reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the video
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewVideoShareWithPeer(peerID int32, fileID string) VideoConfig {
+	return VideoConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
 // NewAnimationUpload creates a new animation uploader.
 //
 // chatID is where to send it, file is a string path to the file,
@@ -243,6 +394,22 @@ func NewAnimationUpload(chatID int64, file interface{}) AnimationConfig {
 	return AnimationConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
+// NewAnimationUploadWithPeer creates a new animation uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewAnimationUploadWithPeer(peerID int32, file interface{}) AnimationConfig {
+	return AnimationConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -264,6 +431,23 @@ func NewAnimationShare(chatID int64, fileID string) AnimationConfig {
 	}
 }
 
+// NewAnimationShareWithPeer shares an existing animation.
+// You may use this to reshare an existing animation without reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the animation
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewAnimationShareWithPeer(peerID int32, fileID string) AnimationConfig {
+	return AnimationConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
 // NewVideoNoteUpload creates a new video note uploader.
 //
 // chatID is where to send it, file is a string path to the file,
@@ -272,6 +456,23 @@ func NewVideoNoteUpload(chatID int64, length int, file interface{}) VideoNoteCon
 	return VideoNoteConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+		Length: length,
+	}
+}
+
+// NewVideoNoteUploadWithPeer creates a new video note uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewVideoNoteUploadWithPeer(peerID int32, length int, file interface{}) VideoNoteConfig {
+	return VideoNoteConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -295,6 +496,24 @@ func NewVideoNoteShare(chatID int64, length int, fileID string) VideoNoteConfig 
 	}
 }
 
+// NewVideoNoteShareWithPeer shares an existing video.
+// You may use this to reshare an existing video without reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the video
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewVideoNoteShareWithPeer(peerID int32, length int, fileID string) VideoNoteConfig {
+	return VideoNoteConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+		Length: length,
+	}
+}
+
 // NewVoiceUpload creates a new voice uploader.
 //
 // chatID is where to send it, file is a string path to the file,
@@ -303,6 +522,22 @@ func NewVoiceUpload(chatID int64, file interface{}) VoiceConfig {
 	return VoiceConfig{
 		BaseFile: BaseFile{
 			BaseChat:    BaseChat{ChatID: chatID},
+			File:        file,
+			UseExisting: false,
+		},
+	}
+}
+
+// NewVoiceUploadWithPeer creates a new voice uploader.
+//
+// peerID is the id of the user to send it to, file is a string path to the file,
+// FileReader, or FileBytes.
+//
+// This method only available for bots with privileges.
+func NewVoiceUploadWithPeer(peerID int32, file interface{}) VoiceConfig {
+	return VoiceConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
 			File:        file,
 			UseExisting: false,
 		},
@@ -324,12 +559,43 @@ func NewVoiceShare(chatID int64, fileID string) VoiceConfig {
 	}
 }
 
+// NewVoiceShareWithPeer shares an existing voice.
+// You may use this to reshare an existing voice without reuploading it.
+//
+// peerID is the id of the user to send it to, fileID is the ID of the video
+// already uploaded.
+//
+// This method only available for bots with privileges.
+func NewVoiceShareWithPeer(peerID int32, fileID string) VoiceConfig {
+	return VoiceConfig{
+		BaseFile: BaseFile{
+			BaseChat:    BaseChat{PeerID: peerID},
+			FileID:      fileID,
+			UseExisting: true,
+		},
+	}
+}
+
 // NewMediaGroup creates a new media group. Files should be an array of
 // two to ten InputMediaPhoto or InputMediaVideo.
 func NewMediaGroup(chatID int64, files []interface{}) MediaGroupConfig {
 	return MediaGroupConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
+		},
+		InputMedia: files,
+	}
+}
+
+// NewMediaGroupWithPeer creates a new media group. Files should be an array of
+// two to ten InputMediaPhoto or InputMediaVideo.
+// peerID is the id of the user to send it to.
+//
+// This method only available for bots with privileges.
+func NewMediaGroupWithPeer(peerID int32, files []interface{}) MediaGroupConfig {
+	return MediaGroupConfig{
+		BaseChat: BaseChat{
+			PeerID: peerID,
 		},
 		InputMedia: files,
 	}
