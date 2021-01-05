@@ -909,6 +909,18 @@ func NewProductCart(chatID int64, cartToken string) ProductCartConfig {
 	}
 }
 
+// NewProductOrder creates a new ProductOrder.
+// Requires a token.
+func NewProductOrder(chatID int64, token string) ProductOrderConfig {
+	return ProductOrderConfig{
+		BaseChat: BaseChat{
+			ChatID:           chatID,
+			ReplyToMessageID: 0,
+		},
+		CartToken: token,
+	}
+}
+
 // NewProductCartWithPeer creates a new ProductCart.
 // Requires a token.
 //

@@ -268,6 +268,27 @@ func (config ProductCartConfig) method() string {
 	return "sendProductCart"
 }
 
+// ProductOrderConfig contains information about a sendProductCart request.
+type ProductOrderConfig struct {
+	BaseChat
+	CartToken string
+}
+
+// values returns a url.Values representation of ProductCartConfig.
+func (config ProductOrderConfig) values() (url.Values, error) {
+	v, err := config.BaseChat.values()
+	if err != nil {
+		return v, err
+	}
+	v.Add("cart_token", config.CartToken)
+	return v, nil
+}
+
+// method returns KingTalk Bot API method name for sending ProductOrder.
+func (config ProductOrderConfig) method() string {
+	return "sendProductOrder"
+}
+
 // ForwardConfig contains information about a ForwardMessage request.
 type ForwardConfig struct {
 	BaseChat

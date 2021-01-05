@@ -58,6 +58,7 @@ func main() {
 			var msg ktbotapi.MessageConfig
 			var msg2 ktbotapi.ProductConfig
 			var msg3 ktbotapi.ProductCartConfig
+			var msg4 ktbotapi.ProductOrderConfig
 			switch update.Message.Command() {
 			case "allinlinebuttons":
 				msg = ktbotapi.NewMessage(update.Message.Chat.ID, "Các loại inline buttons: ")
@@ -119,6 +120,14 @@ func main() {
 						bt9,
 					},
 				}}
+			case "productOrderExample":
+				msg4 = ktbotapi.NewProductOrder(update.Message.Chat.ID, "jb3bZqXQ6U6Z3th6oX9mFBoR1609753303")
+				bt9 := ktbotapi.NewInlineKeyboardButtonURL("Xem thêm", "https://www.google.com/")
+				msg.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
+					{
+						bt9,
+					},
+				}}
 			default:
 				msg.Text = "I don't know that command"
 			}
@@ -130,6 +139,9 @@ func main() {
 			}
 			if &msg3 != nil {
 				bot.Send(msg3)
+			}
+			if &msg4 != nil {
+				bot.Send(msg4)
 			}
 		}
 	}
