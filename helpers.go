@@ -1175,6 +1175,20 @@ func NewProductCart(chatID int64, cartToken string) ProductCartConfig {
 	}
 }
 
+// NewProductCartWithPeer creates a new ProductCart.
+// Requires a token.
+//
+// This method only available for bots with privileges.
+func NewProductCartWithPeer(peerID int32, cartToken string) ProductCartConfig {
+	return ProductCartConfig{
+		BaseChat: BaseChat{
+			PeerID:           peerID,
+			ReplyToMessageID: 0,
+		},
+		CartToken: cartToken,
+	}
+}
+
 // NewProductOrder creates a new ProductOrder.
 // Requires a token.
 func NewProductOrder(chatID int64, token string) ProductOrderConfig {
@@ -1187,17 +1201,17 @@ func NewProductOrder(chatID int64, token string) ProductOrderConfig {
 	}
 }
 
-// NewProductCartWithPeer creates a new ProductCart.
-// Requires a token.
+// NewProductOrderWithPeer creates a new ProductOrder.
+// Requires a token, peerID is the id of the user to send it to.
 //
-// This method only available for bots with privileges.
-func NewProductCartWithPeer(peerID int32, cartToken string) ProductCartConfig {
-	return ProductCartConfig{
+// This method only works for bots with privileges.
+func NewProductOrderWithPeer(peerID int32, token string) ProductOrderConfig {
+	return ProductOrderConfig{
 		BaseChat: BaseChat{
 			PeerID:           peerID,
 			ReplyToMessageID: 0,
 		},
-		CartToken: cartToken,
+		CartToken: token,
 	}
 }
 
