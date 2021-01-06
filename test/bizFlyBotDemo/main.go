@@ -114,16 +114,16 @@ func main() {
 				}}
 			case "productCartExample":
 				msg3 = ktbotapi.NewProductCart(update.Message.Chat.ID, "3FuNpcfFJVcnPGPtWhSVrT941609229347")
-				bt9 := ktbotapi.NewInlineKeyboardButtonURL("Xem thêm", "https://www.google.com/")
-				msg.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
+				bt9 := ktbotapi.NewInlineKeyboardButtonURL("Mua Ngay", "https://www.google.com/")
+				msg3.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
 					{
 						bt9,
 					},
 				}}
 			case "productOrderExample":
 				msg4 = ktbotapi.NewProductOrder(update.Message.Chat.ID, "jb3bZqXQ6U6Z3th6oX9mFBoR1609753303")
-				bt9 := ktbotapi.NewInlineKeyboardButtonURL("Xem thêm", "https://www.google.com/")
-				msg.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
+				bt9 := ktbotapi.NewInlineKeyboardButtonURL("Chi tiết đơn hàng", "https://www.google.com/")
+				msg4.ReplyMarkup = ktbotapi.InlineKeyboardMarkup{InlineKeyboard: [][]ktbotapi.InlineKeyboardButton{
 					{
 						bt9,
 					},
