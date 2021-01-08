@@ -185,6 +185,8 @@ type Message struct {
 	PinnedMessage         *Message           `json:"pinned_message,omitempty"`          // optional
 	Invoice               *Invoice           `json:"invoice,omitempty"`                 // optional
 	SuccessfulPayment     *SuccessfulPayment `json:"successful_payment,omitempty"`      // optional
+	Product               *Product           `json:"product,omitempty"`                 // optional
+	ProductOrder          *ProductOrder      `json:"product_order,omitempty"`           // optional
 }
 
 // Time converts the message timestamp into a Time.
@@ -438,6 +440,35 @@ type Venue struct {
 	Title        string   `json:"title"`
 	Address      string   `json:"address"`
 	FoursquareID string   `json:"foursquare_id"` // optional
+}
+
+// Product contains information about a product.
+type Product struct {
+	Id              int64     `json:"id,omitempty"`
+	Name            string    `json:"name,omitempty"`
+	Image           *Document `json:"image,omitempty"`
+	Descriptions    string    `json:"descriptions,omitempty"`
+	Price           float64   `json:"price,omitempty"`
+	ComparePrice    float64   `json:"compare_price,omitempty"`
+	PercentDiscount int32     `json:"percent_discount,omitempty"`
+	IsHot           bool      `json:"is_hot,omitempty"`
+	TotalSold       int32     `json:"total_sold,omitempty"`
+	TotalView       int32     `json:"total_view,omitempty"`
+	CampaignId      int64     `json:"campaign_id,omitempty"`
+	CampaignName    string    `json:"campaign_name,omitempty"`
+	ProductItemId   int64     `json:"product_item_id,omitempty"`
+	AttributeLabel  string    `json:"attribute_label,omitempty"`
+	Token           string    `json:"token,omitempty"`
+}
+
+// ProductOrder contains information about a product order.
+type ProductOrder struct {
+	Id            int64   `json:"id,omitempty"`
+	OrderCode     string  `json:"order_code,omitempty"`
+	Token         string  `json:"token,omitempty"`
+	Status        string  `json:"status,omitempty"`
+	PaymentStatus bool    `json:"payment_status,omitempty"`
+	TotalPrice    float64 `json:"total_price,omitempty"`
 }
 
 // UserProfilePhotos contains a set of user profile photos.
