@@ -1034,6 +1034,14 @@ func NewInlineKeyboardButtonURL(text, url string) InlineKeyboardButton {
 	}
 }
 
+// NewInlineKeyboardButton creates an inline keyboard button with text
+// user will send message after
+func NewInlineKeyboardButton(text, url string) InlineKeyboardButton {
+	return InlineKeyboardButton{
+		Text: text,
+	}
+}
+
 // NewInlineKeyboardButtonSwitch creates an inline keyboard button with
 // text which allows the user to switch to a chat or return to a chat.
 func NewInlineKeyboardButtonSwitch(text, sw string) InlineKeyboardButton {
@@ -1196,6 +1204,12 @@ func NewProductOrder(chatID int64, token string) ProductOrderConfig {
 		BaseChat: BaseChat{
 			ChatID:           chatID,
 			ReplyToMessageID: 0,
+			ReplyMarkup: ReplyKeyboardMarkup{
+				Keyboard:        [][]KeyboardButton{},
+				ResizeKeyboard:  false,
+				OneTimeKeyboard: false,
+				Selective:       false,
+			},
 		},
 		CartToken: token,
 	}
