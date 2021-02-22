@@ -88,6 +88,7 @@ func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse,
 	if err != nil {
 		return APIResponse{}, err
 	}
+
 	defer resp.Body.Close()
 
 	var apiResp APIResponse
@@ -96,8 +97,10 @@ func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse,
 		return apiResp, err
 	}
 
-	if bot.Debug {
-		log.Printf("%s resp: %s", endpoint, bytes)
+	log.Printf("%s resp: %s", endpoint, bytes)
+
+	if apiResp.Status == http.StatusOK {
+		return apiResp, nil
 	}
 
 	if !apiResp.Ok {

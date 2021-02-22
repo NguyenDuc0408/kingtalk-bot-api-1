@@ -12,11 +12,15 @@ import (
 // APIResponse is a response from the KingTalk Bot API with the result
 // stored raw.
 type APIResponse struct {
+	Status      int                 `json:"status"`
 	Ok          bool                `json:"ok"`
 	Result      json.RawMessage     `json:"result"`
 	ErrorCode   int                 `json:"error_code,omitempty"`
 	Description string              `json:"description"`
 	Parameters  *ResponseParameters `json:"parameters,omitempty"`
+	Message     string              `json:"message"`
+	Log         string              `json:"log"`
+	Key         string              `json:"error_key"`
 }
 
 // ResponseParameters are various errors that can be returned in APIResponse.
@@ -1030,6 +1034,8 @@ type PreCheckoutQuery struct {
 type Error struct {
 	Code    int
 	Message string
+	Log     string
+	Key     string
 	ResponseParameters
 }
 
