@@ -182,6 +182,14 @@ func (bot *BotAPI) makeMessageRequest(endpoint string, params url.Values) (Messa
 	}
 
 	var message Message
+	if endpoint == "sendPhoto" {
+		log.Println(string(resp.Data))
+		json.Unmarshal(resp.Data, &message)
+		bot.debugLog(endpoint, params, message)
+
+		return message, nil
+	}
+
 	json.Unmarshal(resp.Result, &message)
 
 	bot.debugLog(endpoint, params, message)

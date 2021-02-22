@@ -21,6 +21,7 @@ type APIResponse struct {
 	Message     string              `json:"message"`
 	Log         string              `json:"log"`
 	Key         string              `json:"error_key"`
+	Data        json.RawMessage     `json:"data"`
 }
 
 // ResponseParameters are various errors that can be returned in APIResponse.
