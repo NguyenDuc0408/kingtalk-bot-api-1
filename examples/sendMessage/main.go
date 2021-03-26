@@ -8,7 +8,7 @@ import (
 var testPeerID int32 = 1736098
 
 func main() {
-	bot, err := ktbotapi.NewBotAPI("332000:YHE508a4V8HL8yKjlHwchA6RXYEjLpIIXExUzwaH")
+	bot, err := ktbotapi.NewBotAPI("2141344:6bmR3cw6V9zeG49pbgL8u2mNc0Fa0VFuhCLDgdRu")
 	if err != nil {
 		log.Fatal(err)
 	}

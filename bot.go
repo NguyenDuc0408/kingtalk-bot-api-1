@@ -117,10 +117,13 @@ func (bot *BotAPI) MakeRequest(endpoint string, params url.Values) (APIResponse,
 // MakeRequest makes a request to a specific endpoint with our token.
 func (bot *BotAPI) MakeGETRequest(endpoint string, params url.Values) (APIResponse, error) {
 	urlString := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
+
 	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
 		log.Println(err)
+		return APIResponse{}, err
 	}
+
 	req.URL.RawQuery = params.Encode()
 
 	resp, err := bot.Client.Get(req.URL.String())
@@ -130,22 +133,24 @@ func (bot *BotAPI) MakeGETRequest(endpoint string, params url.Values) (APIRespon
 	defer resp.Body.Close()
 
 	var apiResp APIResponse
-	bytes, err := bot.decodeAPIResponse(resp.Body, &apiResp)
+	response, err := bot.decodeAPIResponse(resp.Body, &apiResp)
 	if err != nil {
-		return apiResp, err
+		return APIResponse{}, err
 	}
 
 	if bot.Debug {
-		log.Printf("%s resp: %s", endpoint, bytes)
+		log.Printf("%s resp: %s", endpoint, response)
 	}
 
-	if !apiResp.Ok {
-		parameters := ResponseParameters{}
-		if apiResp.Parameters != nil {
-			parameters = *apiResp.Parameters
-		}
-		return apiResp, &Error{Code: apiResp.ErrorCode, Message: apiResp.Description, ResponseParameters: parameters}
-	}
+	//if !apiResp.Ok {
+	//	parameters := ResponseParameters{}
+	//	if apiResp.Parameters != nil {
+	//		parameters = *apiResp.Parameters
+	//	}
+	//	log.Println(":áaa")
+	//
+	//	return apiResp, &Error{Code: apiResp.ErrorCode, Message: apiResp.Description, ResponseParameters: parameters}
+	//}
 
 	return apiResp, nil
 }
