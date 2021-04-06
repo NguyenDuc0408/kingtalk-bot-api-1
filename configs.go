@@ -10,8 +10,8 @@ import (
 // KingTalk constants
 const (
 	// *NOTE: This is testing endpoint, not official.
-	APIEndpoint  = "http://103.109.40.36:8081/bot%s/%s"
-	FileEndpoint = "http://103.109.40.36:8081/file/bot%s/%s"
+	APIEndpoint  = "http://a.kingtalk.vn/bot%s/%s"
+	FileEndpoint = "http://a.kingtalk.vn/file/bot%s/%s"
 )
 
 // Constant values for ChatActions
