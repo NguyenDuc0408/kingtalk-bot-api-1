@@ -1053,7 +1053,7 @@ type UserProfilePhotosConfig struct {
 
 // FileConfig has information about a file hosted on KingTalk
 type FileConfig struct {
-	FileID string
+	FileID int64
 }
 
 // UpdateConfig contains information about a GetUpdates request.

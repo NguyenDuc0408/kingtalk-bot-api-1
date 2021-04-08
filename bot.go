@@ -295,7 +295,7 @@ func (bot *BotAPI) UploadFile(endpoint string, params map[string]string, fieldna
 // GetFileDirectURL returns direct URL to file
 //
 // It requires the FileID.
-func (bot *BotAPI) GetFileDirectURL(fileID string) (string, error) {
+func (bot *BotAPI) GetFileDirectURL(fileID int64) (string, error) {
 	file, err := bot.GetFile(FileConfig{fileID})
 
 	if err != nil {
@@ -449,7 +449,7 @@ func (bot *BotAPI) GetUserProfilePhotos(config UserProfilePhotosConfig) (UserPro
 // Requires FileID.
 func (bot *BotAPI) GetFile(config FileConfig) (File, error) {
 	v := url.Values{}
-	v.Add("file_id", config.FileID)
+	v.Add("file_id", strconv.FormatInt(config.FileID, 10))
 
 	resp, err := bot.MakeRequest("getFile", v)
 	if err != nil {
