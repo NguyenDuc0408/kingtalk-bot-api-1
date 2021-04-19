@@ -544,6 +544,7 @@ type InlineKeyboardButton struct {
 	CallbackGame                 *CallbackGame `json:"callback_game,omitempty"`                    // optional
 	Pay                          bool          `json:"pay,omitempty"`                              // optional
 	CallbackMessage              *string       `json:"callback_message,omitempty"`                 // optional
+	UserIds                      []int32       `json:"user_ids,omitempty"`                         // optional
 }
 
 // CallbackQuery is data sent when a keyboard button with callback data
